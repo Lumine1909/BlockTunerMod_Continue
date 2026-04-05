@@ -47,12 +47,12 @@ public class NoteBlockMixin extends Block {
         at = @At(value = "INVOKE",
             shift = At.Shift.BEFORE,
             target = "Lnet/minecraft/world/level/block/Block;useItemOn(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;Lnet/minecraft/world/phys/BlockHitResult;)Lnet/minecraft/world/InteractionResult;"))
-    private void onTune(ItemStack itemStack, BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult, CallbackInfoReturnable<InteractionResult> cir) {
+    private void onTune(ItemStack itemStack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult, CallbackInfoReturnable<InteractionResult> cir) {
         if (player.getItemInHand(InteractionHand.MAIN_HAND).getItem() == Items.BLAZE_ROD) {
-            if (level.getBlockState(blockPos.above()).isAir()) {
+            if (level.getBlockState(pos.above()).isAir()) {
                 NoteBlock block = (NoteBlock) (Object) this;
-                level.blockEvent(blockPos, block, 0, 0);
-                level.gameEvent(player, GameEvent.NOTE_BLOCK_PLAY, blockPos);
+                level.blockEvent(pos, block, 0, 0);
+                level.gameEvent(player, GameEvent.NOTE_BLOCK_PLAY, pos);
             }
             cir.setReturnValue(InteractionResult.CONSUME);
         }

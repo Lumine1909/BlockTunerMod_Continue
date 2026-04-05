@@ -37,11 +37,14 @@ public class BlockTunerConfig {
     private static final String KEY_TO_PIANO = "key-to-piano";
     private static final String MIDI_DEVICE = "midi-device";
     private static final String KEY_SIGNATURE = "key-signature";
+    private static final String SEND_STATUS_MESSAGE = "send-status-message";
+
     public static int keySignature = 0;
     public static boolean onBlockTunerServer = false;
     private static String midiDeviceName = "";
     private static boolean keyToPiano = false;
     private static boolean playMode = false;
+    private static boolean sendStatusMessage = false;
 
     public static void save() {
 
@@ -70,6 +73,7 @@ public class BlockTunerConfig {
             playMode = Boolean.parseBoolean(properties.getProperty(PLAY_MODE));
             keyToPiano = Boolean.parseBoolean(properties.getProperty(KEY_TO_PIANO));
             midiDeviceName = properties.getProperty(MIDI_DEVICE, "");
+            sendStatusMessage = Boolean.parseBoolean(properties.getProperty(SEND_STATUS_MESSAGE));
             try {
                 keySignature = Integer.parseInt(properties.getProperty(KEY_SIGNATURE, "0"));
             } catch (NumberFormatException e) {
@@ -138,5 +142,9 @@ public class BlockTunerConfig {
             keySignature = 7;
         }
         properties.setProperty(KEY_SIGNATURE, String.valueOf(keySignature));
+    }
+
+    public static boolean shouldSendStatusMessage() {
+        return sendStatusMessage;
     }
 }

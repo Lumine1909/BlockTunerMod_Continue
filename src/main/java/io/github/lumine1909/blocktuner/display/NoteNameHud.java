@@ -21,7 +21,7 @@ package io.github.lumine1909.blocktuner.display;
 import io.github.lumine1909.blocktuner.util.InputUtil;
 import io.github.lumine1909.blocktuner.util.NoteNames;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.NoteBlock;
@@ -31,7 +31,7 @@ import net.minecraft.world.phys.HitResult;
 
 public class NoteNameHud {
 
-    public static void render(GuiGraphics graphics) {
+    public static void render(GuiGraphicsExtractor graphics) {
         Minecraft client = Minecraft.getInstance();
         assert client.level != null;
         assert client.player != null;
@@ -44,7 +44,7 @@ public class NoteNameHud {
                     int note = state.getValue(NoteBlock.NOTE);
                     int x = client.getWindow().getGuiScaledWidth() / 2 + 4;
                     int y = client.getWindow().getGuiScaledHeight() / 2 + 4;
-                    graphics.drawString(client.font, NoteNames.get(note) + ", " + note, x, y, 0xff66ccff);
+                    graphics.text(client.font, NoteNames.get(note) + ", " + note, x, y, 0xff66ccff);
                 }
             }
         }

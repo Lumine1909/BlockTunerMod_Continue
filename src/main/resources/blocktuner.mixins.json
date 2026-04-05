@@ -3,7 +3,7 @@
   "minVersion": "0.8",
   "package": "io.github.lumine1909.blocktuner.mixin",
   "refmap": "blocktuner-fabric-refmap.json",
-  "compatibilityLevel": "JAVA_21",
+  "compatibilityLevel": "JAVA_25",
   "mixins": [
     "NoteBlockMixin",
     "PlaySoundCommandMixin"

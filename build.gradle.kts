@@ -1,25 +1,10 @@
 plugins {
-    id("fabric-loom") version "1.14-SNAPSHOT"
-    id("maven-publish")
+    id("net.fabricmc.fabric-loom")
+    `maven-publish`
 }
 
-version = project.property("mod_version")!!
-group = project.property("maven_group")!!
-
-repositories {
-    // Add additional repositories here if needed
-}
-
-dependencies {
-    val minecraft_version: String by project
-    val loader_version: String by project
-    val fabric_version: String by project
-
-    minecraft("com.mojang:minecraft:$minecraft_version")
-    mappings(loom.officialMojangMappings())
-    modImplementation("net.fabricmc:fabric-loader:$loader_version")
-    modImplementation("net.fabricmc.fabric-api:fabric-api:$fabric_version")
-}
+version = providers.gradleProperty("mod_version").get()
+group = providers.gradleProperty("maven_group").get()
 
 loom {
     accessWidenerPath.set(file("src/main/resources/blocktuner.accesswidener"))
@@ -28,40 +13,40 @@ loom {
     }
 }
 
+dependencies {
+    minecraft("com.mojang:minecraft:${providers.gradleProperty("minecraft_version").get()}")
+    implementation("net.fabricmc:fabric-loader:${providers.gradleProperty("loader_version").get()}")
+    implementation("net.fabricmc.fabric-api:fabric-api:${providers.gradleProperty("fabric_api_version").get()}")
+
+}
+
 tasks.processResources {
-    inputs.property("version", project.version)
+    inputs.property("version", version)
 
     filesMatching("fabric.mod.json") {
-        expand("version" to project.version)
+        expand("version" to version)
     }
 }
 
 tasks.withType<JavaCompile>().configureEach {
-    options.encoding = "UTF-8"
-    options.release.set(21)
+    options.release = 25
 }
 
 java {
+    // Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
+    // if it is present.
+    // If you remove this line, sources will not be generated.
     withSourcesJar()
+
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
 }
 
 tasks.jar {
+    inputs.property("projectName", project.name)
+    archiveFileName.set("BlockTuner-fabric-${project.version}+MC-26.1.jar")
+
     from("LICENSE") {
-        rename { "${it}_${project.property("archivesBaseName")}" }
-    }
-}
-
-publishing {
-    publications {
-        create<MavenPublication>("mavenJava") {
-
-            artifact(tasks.named("remapJar")) {
-                builtBy(tasks.named("remapJar"))
-            }
-
-            artifact(tasks.named("sourcesJar")) {
-                builtBy(tasks.named("remapSourcesJar"))
-            }
-        }
+        rename { "${it}_${project.name}" }
     }
 }

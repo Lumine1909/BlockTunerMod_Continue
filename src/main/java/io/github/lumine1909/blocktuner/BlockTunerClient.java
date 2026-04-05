@@ -58,7 +58,7 @@ public class BlockTunerClient implements ClientModInitializer {
             return InteractionResult.PASS;
         });
         ClientPlayNetworking.registerGlobalReceiver(ClientBoundHelloPacket.TYPE, ClientBoundHelloPacket::receive);
-        ClientPlayConnectionEvents.JOIN.register((handler, sender, server) -> sender.sendPacket(new ServerBoundHelloPacket(TUNING_PROTOCOL)));
-        ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> BlockTunerConfig.onBlockTunerServer = false);
+        ClientPlayConnectionEvents.JOIN.register((_, sender, _) -> sender.sendPacket(new ServerBoundHelloPacket(TUNING_PROTOCOL)));
+        ClientPlayConnectionEvents.DISCONNECT.register((_, _) -> BlockTunerConfig.onBlockTunerServer = false);
     }
 }

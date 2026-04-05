@@ -21,11 +21,11 @@ import java.util.List;
 @Mixin(CommandSuggestions.SuggestionsList.class)
 public abstract class CommandSuggestionsMixin {
 
+    @Shadow
     @Final
+    CommandSuggestions this$0;
     @Shadow
-    CommandSuggestions field_21615;
-    @Shadow
-    boolean tabCycles;
+    private boolean tabCycles;
     @Shadow
     @Final
     private List<Suggestion> suggestionList;
@@ -45,13 +45,13 @@ public abstract class CommandSuggestionsMixin {
             shift = At.Shift.AFTER
         )
     )
-    private void injected(CallbackInfo ci, @Local LocalRef<Suggestion> suggestion) {
+    private void injected(CallbackInfo ci, @Local(name = "suggestion") LocalRef<Suggestion> suggestion) {
         if (InputUtil.hasControlDown()) {
             if (this.tabCycles) {
                 this.cycle(InputUtil.hasShiftDown() ? 1 : -1);
                 suggestion.set(suggestionList.get(this.current));
             }
-            field_21615.keepSuggestions = false;
+            this$0.keepSuggestions = false;
         }
     }
 }

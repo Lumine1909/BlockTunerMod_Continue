@@ -4,7 +4,7 @@
   "version": "${version}",
 
   "name": "BlockTuner",
-  "description": "A mod which helps you tune note blocks.",
+  "description": "A mod that helps you tune note blocks.",
   "authors": [
     "xwjcool",
     "Lumine1909"
@@ -13,7 +13,7 @@
     "sources": "https://github.com/Lumine1909/BlockTunerMod_Continue"
   },
 
-  "license": "LGPLv3",
+  "license": "GPLv3",
   "icon": "assets/blocktuner/icon.png",
 
   "environment": "*",
@@ -31,9 +31,9 @@
   "accessWidener": "blocktuner.accesswidener",
 
   "depends": {
-    "fabricloader": ">=0.14.21",
-    "fabric": "*",
-    "minecraft": ">=1.21.4"
+    "fabricloader": ">=0.18.5",
+    "fabric-api": "*",
+    "minecraft": ">=26.1"
   },
   "conflicts": {
     "noteduplicator": "*",

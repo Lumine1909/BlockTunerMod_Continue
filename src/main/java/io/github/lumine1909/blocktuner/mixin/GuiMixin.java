@@ -21,7 +21,7 @@ package io.github.lumine1909.blocktuner.mixin;
 import io.github.lumine1909.blocktuner.display.NoteNameHud;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -30,8 +30,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(Gui.class)
 public class GuiMixin {
 
-    @Inject(method = "render", at = @At("TAIL"))
-    private void renderNoteNameHud(GuiGraphics guiGraphics, DeltaTracker deltaTracker, CallbackInfo ci) {
-        NoteNameHud.render(guiGraphics);
+    @Inject(method = "extractRenderState", at = @At("TAIL"))
+    private void renderNoteNameHud(GuiGraphicsExtractor graphics, DeltaTracker deltaTracker, CallbackInfo ci) {
+        NoteNameHud.render(graphics);
     }
 }
