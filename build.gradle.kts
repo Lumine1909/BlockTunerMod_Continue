@@ -44,7 +44,7 @@ java {
 
 tasks.jar {
     inputs.property("projectName", project.name)
-    archiveFileName.set("BlockTuner-fabric-${project.version}+MC-26.1.jar")
+    archiveFileName.set("BlockTuner-fabric-${project.version}+MC-26.2.jar")
 
     from("LICENSE") {
         rename { "${it}_${project.name}" }

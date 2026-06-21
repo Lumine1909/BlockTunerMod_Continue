@@ -63,7 +63,7 @@ public class ClientNoteBlockMixin extends Block {
     public void setPlacedBy(Level level, BlockPos blockPos, BlockState blockState, @Nullable LivingEntity livingEntity, ItemStack itemStack) {
         Minecraft client = Minecraft.getInstance();
         if (livingEntity != null && livingEntity.equals(client.player) && InputUtil.hasControlDown()) {
-            client.execute(() -> client.setScreen(new TuningScreen(Component.empty(), blockPos)));
+            client.execute(() -> client.setScreenAndShow(new TuningScreen(Component.empty(), blockPos)));
         }
         super.setPlacedBy(level, blockPos, blockState, livingEntity, itemStack);
     }

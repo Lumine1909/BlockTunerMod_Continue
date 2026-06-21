@@ -20,9 +20,14 @@ package io.github.lumine1909.blocktuner.mixin;
 
 import io.github.lumine1909.blocktuner.display.NoteNameHud;
 import net.minecraft.client.DeltaTracker;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.renderer.state.gui.GuiRenderState;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -30,8 +35,17 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(Gui.class)
 public class GuiMixin {
 
+    @Shadow
+    @Final
+    private GuiRenderState guiRenderState;
+
+    @Shadow
+    private Screen screen;
+
     @Inject(method = "extractRenderState", at = @At("TAIL"))
-    private void renderNoteNameHud(GuiGraphicsExtractor graphics, DeltaTracker deltaTracker, CallbackInfo ci) {
-        NoteNameHud.render(graphics);
+    private void renderNoteNameHud(DeltaTracker deltaTracker, boolean shouldRenderLevel, boolean resourcesLoaded, CallbackInfo ci) {
+        if (screen == null) {
+            NoteNameHud.render(new GuiGraphicsExtractor(Minecraft.getInstance(), guiRenderState, 0, 0));
+        }
     }
 }
