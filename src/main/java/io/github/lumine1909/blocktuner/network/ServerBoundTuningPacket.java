@@ -48,6 +48,9 @@ public record ServerBoundTuningPacket(BlockPos blockPos, int note) implements Cu
 
     public static void receive(ServerBoundTuningPacket payload, ServerPlayNetworking.Context context) {
         BlockPos pos = payload.blockPos();
+        if (!context.player().isWithinBlockInteractionRange(pos, 1.0F)) {
+            return;
+        }
         int note = payload.note();
         ServerLevel world = context.player().level();
 
